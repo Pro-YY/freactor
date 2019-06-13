@@ -1,5 +1,7 @@
-reducer execution timeout
+- reducer execution timeout
 
-path report.
+- path report
 
-performance test result.
+- default RETRY/ABORT for simpler task config
+
+- performance test result
