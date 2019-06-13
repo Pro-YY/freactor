@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="freactor",
-    version="0.0.2",
+    version="0.0.3",
     author="Brooke Yang",
     author_email="brookeyang@vip.qq.com",
     description="lightweight flow-control framework",
