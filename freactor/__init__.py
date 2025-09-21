@@ -1,5 +1,6 @@
 from .lib import Freactor, StatusCode, freducer
+from .lib_async import AsyncFreactor, freducer as async_freducer
 
 name = "freactor"
-__all__ = [Freactor, StatusCode, freducer]
-
+__version__ = "0.1.0"
+__all__ = [Freactor, StatusCode, freducer, AsyncFreactor, async_freducer]

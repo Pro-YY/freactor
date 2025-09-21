@@ -1,0 +1,33 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [0.1.0] - 2025-09-21
+## Added
+
+- AsyncFreactor: introduced an asynchronous reactor implementation powered by asyncio.
+
+- async_freducer decorator: supports coroutine-based reducers with retry and delay handling.
+
+- Task execution now supports fully async pipelines; reducers can be async def or sync functions.
+
+- Collector pattern introduced to decouple reducer execution and result collection, improving throughput.
+
+- Built-in logging with automatic injection of _task_id into reducer data for better observability.
+
+## Changed
+
+- Updated package exports (__init__.py) to expose:
+
++ Freactor (sync version)
++ AsyncFreactor (async version)
++ StatusCode
++ freducer (sync decorator)
++ async_freducer (async decorator)
+
+## Performance
+
+- Benchmarked throughput of 20k–35k tasks/s per process (I/O-bound async tasks).
+
+- Single process with multiple actors supports up to 1M+ steps with stable memory usage.
+  
