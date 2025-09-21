@@ -1,11 +1,20 @@
+import re
 import setuptools
+
+
+# read __version__ from __init__
+with open("freactor/__init__.py", "r") as f:
+    content = f.read()
+    version = re.search(r'__version__ = "([^"]+)"', content).group(1)
+
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+
 setuptools.setup(
     name="freactor",
-    version="0.1.0",
+    version=version,
     author="Brooke Yang",
     author_email="brookeyang@vip.qq.com",
     description="lightweight flow-control framework (sync + async support)",
