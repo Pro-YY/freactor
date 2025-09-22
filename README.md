@@ -36,7 +36,7 @@ pip install -e .
 
 
 # Quick Start
-1. Define Reducers
+## 1. Define Reducers
 ```
 import asyncio
 import logging
@@ -53,7 +53,7 @@ async def step1(data):
     return SUCCESS, {"step1": True}, "done"
 ```
 
-2. Configure Task Flow
+## 2. Configure Task Flow
 ```
 TASK_CONFIG = {
     "example_task": {
@@ -65,7 +65,7 @@ TASK_CONFIG = {
 }
 ```
 
-3. Run Tasks with AsyncFreactor
+## 3. Run Tasks with AsyncFreactor
 ```
 import asyncio
 from freactor import AsyncFreactor
@@ -95,4 +95,5 @@ Combine multiple processes (each with its own actors) or connect pods via Redis 
 
 # License
 
-MIT
+[MIT]
+This project is licensed under the [MIT License](./LICENSE).
