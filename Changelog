@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2025-09-22
+## Added
+
+- Task queue backpressure: AsyncFreactor.run_task now supports a block parameter.
+
+  + block=True (default): waits until a slot is available in the queue.
+
+  + block=False: non-blocking, raises asyncio.QueueFull if the queue is full.
+
+- Configurable asyncio.Queue(maxsize=N) for both task and result queues, allowing better memory control under heavy concurrency.
+
+- Multiple Collectors are supported, enabling better throughput when reducers are I/O bound.
+
+- Improved logging and task lifecycle tracing: clear separation of Actor (scheduling), Collector (awaiting results), and Reducer (execution).
+
+## Changed
+
+- Default num_actors=10 for AsyncFreactor, tuned for most I/O-bound workloads.
+
+- The @freducer decorator now automatically records retry counts in task data with the key _general_retried_<step> for better observability.
+
+## Fixed
+
+- Fixed an issue where incomplete task table configurations could lead to deadlocks in TASK_NEXT.
+
+- Fixed import naming inconsistency: unified exposure of async_freducer in __init__.py.
+
+
 ## [0.1.0] - 2025-09-21
 ## Added
 

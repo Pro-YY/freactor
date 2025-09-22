@@ -1,8 +1,14 @@
 import asyncio
 import logging
 
-logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s.%(msecs)03d] [%(levelname)s] [%(filename)s:%(lineno)d] [%(name)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+# logging.getLogger("freactor").setLevel(logging.INFO)
+
 
 from freactor import AsyncFreactor, StatusCode
 
@@ -63,6 +69,17 @@ TASK_CONFIG = {
                 ABORT: None,
             }
         }
+    },
+    'example_task_4': {
+        'init_step': ('basic_async', 'call_http_api'),
+        'table': {
+            ('basic_async', 'call_http_api'): {
+                SUCCESS: None,
+                FAILURE: None,
+                RETRY: ('basic_async', 'call_http_api'),
+                ABORT: None,
+            }
+        }
     }
 }
 
@@ -75,12 +92,24 @@ async def main():
         'import_reducer_prefix': 'example-reducers.',
     })
 
-    await f.run_task('example_task_3', {"task": "demo"})
+    try:
+        await f.run_task('example_task_3', {"task": "demo"})
+        # await f.run_task('example_task_4', {"task": "demo"})
 
-    for i in range(9):
-       await f.run_task('example_task_3', {"my_task_name": str(i)})
+        # NOTE: when 1K, cpu burst 100%, tasks emerged then executed later
+        # for i in range(9):
+        #    await f.run_task('example_task_3', {"my_task_name": str(i)})
+        #    await f.run_task('example_task_4', {"my_task_name": str(i)})
 
-    await f.run_forever()
+        await f.run_forever()
+ 
+    except asyncio.CancelledError:
+        pass
+    finally:
+        await f.stop()
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Ctrl+C pressed, shutting down...")

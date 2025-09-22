@@ -38,7 +38,7 @@ async def s2(t_data):  # cleanup step of s1
         raise Exception("Woo! s2 raised!")
 
 
-@freducer(3, 1)
+@freducer(3, 0)
 async def s3(t_data):
     task_id = t_data.get("_task_id", "?")
     log.info(f"[task {task_id}] s3 running...")
@@ -75,3 +75,15 @@ async def s5(t_data):
         return StatusCode.SUCCESS, {"s5": 5}, "s5 general success"
     else:
         raise Exception("Woo! s5 raised!")
+
+
+import httpx
+
+@freducer()
+async def call_http_api(t_data):
+    await asyncio.sleep(random() * 10)
+    async with httpx.AsyncClient(timeout=5) as client:
+        log.info(f"[task {t_data.get('_task_id', '?')}] calling http api...")
+        r = await client.get("https://httpbin.org/get")
+        # r = await client.get("https://httpbin.org/delay/1")
+        return StatusCode.SUCCESS, {"api_status": r.status_code}, "http ok"
